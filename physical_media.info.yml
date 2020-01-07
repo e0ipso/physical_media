@@ -1,0 +1,5 @@
+name: Physical Media
+description: Custom module to handle logic around physical media like books and movies.
+core: 8.x
+dependencies:
+  - typed_entity:typed_entity

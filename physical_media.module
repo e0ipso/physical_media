@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Module implementation file.
+ */
+
+use Drupal\Core\Access\AccessibleInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+use Drupal\typed_entity\RepositoryManager;
+use Drupal\typed_entity\RepositoryNotFoundException;
+
+/**
+ * Implements hook_node_access().
+ */
+function physical_media_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  try {
+    $wrapped_node = \Drupal::service(RepositoryManager::class)->wrap($node);
+  }
+  catch (RepositoryNotFoundException $exception) {
+    return AccessResult::neutral();
+  }
+  return $wrapped_node instanceof AccessibleInterface
+    ? $wrapped_node->access($op, $account, TRUE)
+    : AccessResult::neutral();
+}

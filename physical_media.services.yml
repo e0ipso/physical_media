@@ -1,0 +1,11 @@
+services:
+  physical_media.typed_entity.repository.book:
+    class: Drupal\physical_media\TypedEntityRepositories\BookRepository
+    parent: Drupal\typed_entity\TypedRepositories\TypedEntityRepositoryBase
+    public: true
+    tags:
+      -
+        name: typed_entity_repository
+        entity_type_id: node
+        bundle: book
+        wrapper_class: Drupal\physical_media\WrappedEntities\Book
